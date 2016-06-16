@@ -1,0 +1,32 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - M13ProgressSuite (1.2.7)
+  - MBProgressHUD (0.9.2)
+
+DEPENDENCIES:
+  - AFNetworking
+  - M13ProgressSuite
+  - MBProgressHUD
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  M13ProgressSuite: 03d194af6359da440641ba758aed5a18b0386a86
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+
+PODFILE CHECKSUM: 4bdf02c2027dc9c50c1a0550c3e16448e7322e3d
+
+COCOAPODS: 1.0.1
