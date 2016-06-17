@@ -13,6 +13,7 @@ import M13ProgressSuite
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var networkErrorView: UIView!
     
     var movies: [NSDictionary]?
     var pHUD: M13ProgressHUD?
@@ -30,16 +31,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let (request, session) = makeRequest()
         
         let task: NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (dataOrNil, response, error) in
-            
-            self.pHUD!.hide(true)
-            
-            if let data = dataOrNil {
-                if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(data, options:[]) as? NSDictionary {
-                    
-                    self.movies = responseDictionary["results"] as! [NSDictionary]
-                    self.tableView.reloadData()
-                }
-            }
+            self.getData(dataOrNil, response: response, error: error)
         })
         task.resume()
     }
@@ -86,26 +78,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         
-        let baseURL = "http://image.tmdb.org/t/p/w500"
-        let posterPath = movie["poster_path"] as! String
-        let posterURL = NSURL(string: baseURL + posterPath)
-        
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWithURL(posterURL!)
+        
+        let baseURL = "http://image.tmdb.org/t/p/w500"
+        if let posterPath = movie["poster_path"] as? String {
+            let posterURL = NSURL(string: baseURL + posterPath)
+            cell.posterView.setImageWithURL(posterURL!)
+        } else {
+            cell.posterView.image = nil
+        }
         
         return cell
     }
     
-    // Makes a network request to get updated data
-    // Updates the tableView with the new data
-    // Hides the RefreshControl
     func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        self.pHUD!.show(true)
         
         let (request, session) = makeRequest()
         
-        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
-            // ... Use the new data to update the data source ...
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (dataOrNil, response, error) in
+            self.getData(dataOrNil, response: response, error: error)
                                                                         
             // Reload the tableView now that there is new data
             self.tableView.reloadData()
@@ -115,6 +109,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
+    //Makes a network request to The Movie Databases's Now Playing movie list.
+    //Returns a tuple containing the request and the session to be used in a task.
     func makeRequest() -> (request: NSURLRequest, session: NSURLSession) {
         let apiKey = "77e39e6fb6ea72b339bcf3e67eb06034"
         let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
@@ -130,6 +126,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         )
         
         return (request, session)
+    }
+    
+    //Attempt to get movie data
+    func getData(dataOrNil: NSData?, response: NSURLResponse?, error: NSError?) {
+        self.pHUD!.hide(true)
+        
+        if error != nil {
+            self.networkErrorView.hidden = false
+        } else {
+            self.networkErrorView.hidden = true
+        }
+        
+        //Get new data
+        if let data = dataOrNil {
+            if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(data, options:[]) as? NSDictionary {
+                
+                self.movies = responseDictionary["results"] as? [NSDictionary]
+                self.tableView.reloadData()
+            }
+        }
     }
 
 }
