@@ -30,8 +30,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="381" height="138.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="y0p-eF-mc6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="79" height="116.5"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Movie" id="y0p-eF-mc6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="79" height="130.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bb2-yd-Lxy">
@@ -100,9 +100,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vGK-YN-o9w">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Movie" id="vGK-YN-o9w">
                                 <rect key="frame" x="0.0" y="65" width="414" height="671"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" id="D7J-fj-ebu">
                                 <rect key="frame" x="0.0" y="414" width="414" height="322"/>
@@ -159,6 +160,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Movie" width="240" height="240"/>
         <image name="NetworkError" width="240" height="240"/>
     </resources>
 </document>

@@ -81,7 +81,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let baseURL = "http://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String {
             let posterURL = NSURL(string: baseURL + posterPath)
-            
+        
             let imageRequest = NSURLRequest(
                 URL: posterURL!,
                 cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
@@ -101,11 +101,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     //don't fade in if cached
                     cell.posterView.image = image
                 }
-                }, failure: { (imageRequest, imageResponse, error) -> Void in
-                    cell.posterView.image = nil
-                })
-        } else {
-            cell.posterView.image = nil
+            }, failure: { (imageRequest, imageResponse, error) -> Void in
+            })
         }
         
         return cell
