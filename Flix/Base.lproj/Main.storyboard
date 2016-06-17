@@ -23,11 +23,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="139" id="uCz-Vb-bzZ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="139" id="uCz-Vb-bzZ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uCz-Vb-bzZ" id="GOW-jM-lkX">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="138.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="381" height="138.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="y0p-eF-mc6">
@@ -54,6 +54,7 @@
                                             <outlet property="overviewLabel" destination="Bb2-yd-Lxy" id="fhH-yQ-6zT"/>
                                             <outlet property="posterView" destination="y0p-eF-mc6" id="wnF-Jg-WEg"/>
                                             <outlet property="titleLabel" destination="Dcs-G3-JgK" id="tda-9o-zoa"/>
+                                            <segue destination="ihQ-rL-G7P" kind="push" id="qN6-tB-IJ1"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -89,7 +90,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHD-9J-GPG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="-101"/>
+            <point key="canvasLocation" x="-375" y="-81"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="BzG-UB-3O7">
+            <objects>
+                <viewController id="ihQ-rL-G7P" customClass="DetailViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CTg-og-24s">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="vGK-YN-o9w">
+                                <rect key="frame" x="0.0" y="65" width="414" height="671"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" id="D7J-fj-ebu">
+                                <rect key="frame" x="0.0" y="414" width="414" height="322"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mh1-9b-M7g">
+                                        <rect key="frame" x="8" y="47" width="398" height="267"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HVI-sy-0Z4">
+                                        <rect key="frame" x="8" y="15" width="398" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WSJ-TQ-V8N"/>
+                    <connections>
+                        <outlet property="overviewLabel" destination="Mh1-9b-M7g" id="OYM-Hf-Hqd"/>
+                        <outlet property="posterImageView" destination="vGK-YN-o9w" id="U5x-88-rlC"/>
+                        <outlet property="titleLabel" destination="HVI-sy-0Z4" id="BKA-PN-jrx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bI7-QT-tfi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="109" y="-81"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="g6i-P0-YDZ">
@@ -107,7 +155,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tas-ZT-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-519" y="-109"/>
+            <point key="canvasLocation" x="-837" y="-81"/>
         </scene>
     </scenes>
     <resources>

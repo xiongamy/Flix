@@ -40,13 +40,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        pHUD = showHUD()
-    }
-
-    
     func showHUD() -> M13ProgressHUD {
         let progressView = M13ProgressViewRing.init()
         progressView.indeterminate = true
@@ -143,8 +136,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
-        self.pHUD!.show(true)
-        
         let (request, session) = makeRequest()
         
         let task : NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (dataOrNil, response, error) in
@@ -161,6 +152,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     //Makes a network request to The Movie Databases's Now Playing movie list.
     //Returns a tuple containing the request and the session to be used in a task.
     func makeRequest() -> (request: NSURLRequest, session: NSURLSession) {
+        
+        if pHUD != nil {
+            pHUD!.show(true)
+        } else {
+            pHUD = showHUD()
+        }
+        
+        
         let apiKey = "77e39e6fb6ea72b339bcf3e67eb06034"
         let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(
@@ -196,5 +195,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)
+        let movie = filteredMovies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+        
     }
 }
