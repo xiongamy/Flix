@@ -10,19 +10,23 @@ import UIKit
 import AFNetworking
 import M13ProgressSuite
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    var movies: [NSDictionary]?
     var pHUD: M13ProgressHUD?
+    var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
+        filteredMovies = movies
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -63,8 +67,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if movies != nil {
+            return filteredMovies.count
         } else {
             return 0
         }
@@ -74,7 +78,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredMovies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         
@@ -90,6 +94,29 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         }
         
         return cell
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredMovies = movies
+        } else if movies != nil {
+            // The user has entered text into the search box
+            // And items exist to iterate over
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredMovies = movies!.filter({(dataItem: NSDictionary) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                if (dataItem["title"] as! String).rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        tableView.reloadData()
     }
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
@@ -143,9 +170,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(data, options:[]) as? NSDictionary {
                 
                 self.movies = responseDictionary["results"] as? [NSDictionary]
+                filteredMovies = movies
                 self.tableView.reloadData()
             }
         }
     }
-
 }
