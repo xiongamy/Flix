@@ -27,6 +27,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         searchBar.delegate = self
         filteredMovies = movies
+        self.tableView.backgroundColor = UIColor.blackColor()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -47,6 +48,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let HUD = M13ProgressHUD(progressView: progressView)
         HUD.progressViewSize = CGSizeMake(80.0, 80.0)
         HUD.animationPoint = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
+        //progressView.backgroundColor = UIColor.whiteColor()
+        HUD.hudBackgroundColor = UIColor.whiteColor()
         let window: UIWindow! = (UIApplication.sharedApplication().delegate as! AppDelegate).window
         window.addSubview(HUD)
         HUD.show(true)
@@ -77,6 +80,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.darkGrayColor()
+        cell.selectedBackgroundView = backgroundView
         
         let baseURL = "http://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String {
@@ -202,5 +209,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.movie = movie
         
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated:true)
     }
 }

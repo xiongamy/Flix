@@ -13,6 +13,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var infoView: UIView!
     
     var movie: NSDictionary!
     
@@ -24,6 +25,9 @@ class DetailViewController: UIViewController {
         
         titleLabel.text = title
         overviewLabel.text = overview
+        overviewLabel.sizeToFit()
+        resizeInfoView()
+        
         
         let smallBaseURL = "http://image.tmdb.org/t/p/w45"
         let largeBaseURL = "http://image.tmdb.org/t/p/original"
@@ -83,14 +87,38 @@ class DetailViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func resizeInfoView() {
+        let newHeight = titleLabel.frame.height + overviewLabel.frame.height
+        let oldHeight = infoView.frame.height
+        let padding: CGFloat = 30
+        
+        let moveDist = oldHeight - newHeight - padding
+        
+        infoView.frame.offsetInPlace(dx: 0, dy: moveDist)
     }
-    */
 
 }
+
+
+/*extension UIView {
+    
+    func resizeToFitSubviews() {
+        
+        
+        
+        /*
+        let subviewsRect = subviews.reduce(CGRect.zero) {
+            $0.union($1.frame)
+        }
+        
+        let fix = subviewsRect.origin
+        subviews.forEach {
+            $0.frame.offsetInPlace(dx: fix.x, dy: fix.y)
+        }
+        
+        frame.offsetInPlace(dx: fix.x, dy: fix.y)
+        frame.offsetInPlace(dx: fix.x, dy: fix.y)
+        frame.size = subviewsRect.size
+ */
+    }
+}*/
